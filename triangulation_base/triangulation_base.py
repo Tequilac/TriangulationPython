@@ -9,10 +9,18 @@ class TriangulationBase(ABC):
         self.camera_matrix_second = camera_matrix_second
 
     @abstractmethod
-    def triangulate_point(self, point_first: tuple[float, float], point_second: tuple[float, float]):
+    def triangulate_point(
+            self,
+            point_first: tuple[float, float],
+            point_second: tuple[float, float],
+    ) -> tuple[float, float, float]:
         ...
 
-    def triangulate(self, points_first: list[tuple[float, float]], points_second: list[tuple[float, float]]):
+    def triangulate(
+            self,
+            points_first: list[tuple[float, float]],
+            points_second: list[tuple[float, float]],
+    ) -> list[tuple[float, float, float]]:
         result = []
         for point_first, point_second in zip(points_first, points_second):
             result.append(self.triangulate_point(point_first, point_second))
