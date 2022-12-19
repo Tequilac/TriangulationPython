@@ -15,10 +15,10 @@ class PolyBase(TriangulationBase):
         self.f = f if f is not None else self.compute_fundamental_matrix(camera_matrix_first, camera_matrix_second)
 
     def compute_fundamental_matrix(self, camera_matrix_first: np.matrix, camera_matrix_second: np.matrix) \
-            -> np.matrix:
+            -> np.ndarray:
         K0, K1, R, T = self.set_origin_to_camera(camera_matrix_first, camera_matrix_second)
 
-        A = K0 * R.transpose() * T
+        A = np.matmul(np.matmul(K0, R.transpose()), T)
 
         C = np.zeros((3, 3))
         C[0, 1] = -A[2]
@@ -28,7 +28,7 @@ class PolyBase(TriangulationBase):
         C[2, 0] = -A[1]
         C[2, 1] = A[0]
 
-        return inv(K1).transpose() * R * K0.transpose()
+        return np.matmul(np.matmul(np.matmul(inv(K1).transpose(), R), K0.transpose()), C)
 
     def set_origin_to_camera(self, camera_matrix_first: np.matrix, camera_matrix_second: np.matrix):
         K0, R0, T0, _, _, _, _ = cv2.decomposeProjectionMatrix(camera_matrix_first)
@@ -38,13 +38,13 @@ class PolyBase(TriangulationBase):
 
         M[0:3, 0:3] = inv(R0)
         M[0, 3] = T0[0] / T0[3]
-        M[1, 3] = T0[1 / T0[3]]
+        M[1, 3] = T0[1] / T0[3]
         M[2, 3] = T0[2] / T0[3]
 
-        tmp = inv(K1) * camera_matrix_second * M
+        tmp = np.matmul(np.matmul(inv(K1), camera_matrix_second), M)
 
         R = tmp[0:3, 0:3]
-        T = tmp[3, 0:3]
+        T = tmp[:, 3]
 
         return K0, K1, R, T
 
@@ -112,7 +112,7 @@ class PolyBase(TriangulationBase):
 
     def find_polynominal_order(self, coeffs: np.ndarray) \
             -> int:
-        for idx, coeff in enumerate(coeffs):
+        for idx, coeff in reversed(list(enumerate(coeffs))):
             if coeff != 0:
                 return idx
         return -1
@@ -146,7 +146,7 @@ class PolyBase(TriangulationBase):
     def transfer_point_to_original_coordinates(self, p: tuple[float, float, float], R: np.matrix, T: np.matrix) \
             -> tuple[float, float, float]:
         x = np.matrix((p[0], p[1], p[2]))
-        x = T * R.transpose() * x
+        x = np.matmul(np.matmul(T, R.transpose()), x.transpose())
         return x[0], x[1], x[2]
 
     @abstractmethod

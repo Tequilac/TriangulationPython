@@ -2,6 +2,7 @@ from unittest import TestCase
 
 import numpy as np
 import pytest
+import cv2
 
 from .fixtures import setup_horizontal_configuration, setup_second_camera_rotated_right_configuration, \
     setup_general_camera_configuration, setup_second_camera_rotated_left_configuration
@@ -14,12 +15,9 @@ from poly_abs.poly_abs import PolyAbs
 
 
 def evaluate_result(result: tuple[float, float, float], expected_result: tuple[float, float, float], max_percentage_error=0.001):
-    tolerance = np.linalg.norm(expected_result) * max_percentage_error
-    distance = np.linalg.norm(np.array(result) - np.array(expected_result))
-    print(f'RESULT {result} EXPECTED {expected_result}')
-    print(pytest.approx(distance, 0.0, tolerance))
-    print(distance)
-    assert pytest.approx(distance, 0.0, tolerance) == distance
+    tolerance = cv2.norm(expected_result) * max_percentage_error
+    distance = cv2.norm(np.subtract(result, expected_result))
+    assert pytest.approx(0, abs=tolerance) == distance
 
 
 class Test(TestCase):
@@ -135,10 +133,52 @@ class Test(TestCase):
         expected_result = (500.0, 0.0, 10000.0)
         evaluate_result(result, expected_result)
 
+    def test_linear_eigen_general_setup(self):
+        P0, P1 = setup_general_camera_configuration()
+        p = LinearEigen(P0, P1)
+        result = p.triangulate_point((146, 642.288), (1137.31, 385.201))
+        expected_result = (0.0, 100.0, 10000.0)
+        evaluate_result(result, expected_result)
+
+    def test_linear_eigen_rotated_left(self):
+        P0, P1 = setup_second_camera_rotated_left_configuration()
+        p = LinearEigen(P0, P1)
+        result = p.triangulate_point((878.821, 634.619), (274.917, 511.5))
+        expected_result = (500.0, 0.0, 10000.0)
+        evaluate_result(result, expected_result)
+
+    def test_linear_eigen_rotated_right(self):
+        P0, P1 = setup_second_camera_rotated_right_configuration()
+        p = LinearEigen(P0, P1)
+        result = p.triangulate_point((1004.08, 511.5), (150.068, 634.618))
+        expected_result = (500.0, 0.0, 10000.0)
+        evaluate_result(result, expected_result)
+
     def test_linear_eigen_horizontal_stereo(self):
         P0, P1 = setup_horizontal_configuration()
         p = LinearEigen(P0, P1)
         result = p.triangulate_point((1004.08, 511.5), (274.917, 511.5))
+        expected_result = (500.0, 0.0, 10000.0)
+        evaluate_result(result, expected_result)
+
+    def test_iterative_eigen_general_setup(self):
+        P0, P1 = setup_general_camera_configuration()
+        p = IterativeEigen(P0, P1)
+        result = p.triangulate_point((146, 642.288), (1137.31, 385.201))
+        expected_result = (0.0, 100.0, 10000.0)
+        evaluate_result(result, expected_result)
+
+    def test_iterative_eigen_rotated_left(self):
+        P0, P1 = setup_second_camera_rotated_left_configuration()
+        p = IterativeEigen(P0, P1)
+        result = p.triangulate_point((878.821, 634.619), (274.917, 511.5))
+        expected_result = (500.0, 0.0, 10000.0)
+        evaluate_result(result, expected_result)
+
+    def test_iterative_eigen_rotated_right(self):
+        P0, P1 = setup_second_camera_rotated_right_configuration()
+        p = IterativeEigen(P0, P1)
+        result = p.triangulate_point((1004.08, 511.5), (150.068, 634.618))
         expected_result = (500.0, 0.0, 10000.0)
         evaluate_result(result, expected_result)
 

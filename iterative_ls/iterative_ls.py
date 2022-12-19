@@ -1,3 +1,4 @@
+from solveZ.solveZ import solveZ
 from triangulation_base.triangulation_base import TriangulationBase
 
 import numpy as np
@@ -19,8 +20,9 @@ class IterativeLS(TriangulationBase):
             matrix[1] = (point_first[1] * self.camera_matrix_first[2] - self.camera_matrix_first[1]) / w0
             matrix[2] = (point_second[0] * self.camera_matrix_second[2] - self.camera_matrix_second[0]) / w1
             matrix[3] = (point_second[1] * self.camera_matrix_second[2] - self.camera_matrix_second[1]) / w1
-            result = [1, 1, 1, 1]  # Kamil zrób żeby tutaj było takie coś https://docs.opencv.org/3.4/df/df7/classcv_1_1SVD.html#ab255cd24a882ab993fb2f7377ef2774a
-            new_w0, new_w1 = (self.camera_matrix_first[2] * result)[0], (self.camera_matrix_second[2] * result)[0]
+            result = solveZ(matrix)
+            new_w0 = np.matmul(self.camera_matrix_first[2], result)
+            new_w1 = np.matmul(self.camera_matrix_second[2], result)
             if (abs(w0 - new_w0) <= EPS) and (abs(w1 - new_w1) <= EPS):
                 break
             w0, w1 = new_w0, new_w1

@@ -46,7 +46,7 @@ class PolyAbs(PolyBase):
             2 * a * a * a * b * c * d * e * e * e * e * e * e - a * a * b * b * c * c * e * e * e * e * e * e
             - a * a * a * a * d * d * e * e * e * e * e * e])
 
-        result = np.resize(result, (1, self.find_polynominal_order(result)) + 1)
+        result = np.resize(result, (1, max(1, self.find_polynominal_order(result) + 1)))
 
         max_coeff = np.amax(result)
 

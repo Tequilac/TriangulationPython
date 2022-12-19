@@ -20,7 +20,7 @@ class Poly(PolyBase):
             - c * c * c * c * f * f * f * f - a * a * a * a,
             a * a * c * d * e * e * e * e - a * b * c * c * e * e * e * e])
 
-        result = np.resize(result, (1, self.find_polynominal_order(result)) + 1)
+        result = np.resize(result, (1, max(1, self.find_polynominal_order(result) + 1)))
 
         max_coeff = np.amax(result)
 
