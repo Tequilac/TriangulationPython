@@ -22,169 +22,169 @@ def evaluate_result(result: tuple[float, float, float], expected_result: tuple[f
 
 class Test(TestCase):
     def test_poly_general_setup(self):
-        P0, P1 = setup_general_camera_configuration()
-        p = Poly(P0, P1)
+        p0, p1 = setup_general_camera_configuration()
+        p = Poly(p0, p1)
         result = p.triangulate_point((146, 642.288), (1137.31, 385.201))
         expected_result = (0.0, 100.0, 10000.0)
         evaluate_result(result, expected_result)
 
     def test_poly_rotated_left(self):
-        P0, P1 = setup_second_camera_rotated_left_configuration()
-        p = Poly(P0, P1)
+        p0, p1 = setup_second_camera_rotated_left_configuration()
+        p = Poly(p0, p1)
         result = p.triangulate_point((878.821, 634.619), (274.917, 511.5))
         expected_result = (500.0, 0.0, 10000.0)
         evaluate_result(result, expected_result)
 
     def test_poly_rotated_right(self):
-        P0, P1 = setup_second_camera_rotated_right_configuration()
-        p = Poly(P0, P1)
+        p0, p1 = setup_second_camera_rotated_right_configuration()
+        p = Poly(p0, p1)
         result = p.triangulate_point((1004.08, 511.5), (150.068, 634.618))
         expected_result = (500.0, 0.0, 10000.0)
         evaluate_result(result, expected_result)
 
     def test_poly_horizontal_stereo(self):
-        P0, P1 = setup_horizontal_configuration()
-        p = Poly(P0, P1)
+        p0, p1 = setup_horizontal_configuration()
+        p = Poly(p0, p1)
         result = p.triangulate_point((1004.08, 511.5), (274.917, 511.5))
         expected_result = (500.0, 0.0, 10000.0)
         evaluate_result(result, expected_result)
 
     def test_poly_abs_general_setup(self):
-        P0, P1 = setup_general_camera_configuration()
-        p = PolyAbs(P0, P1)
+        p0, p1 = setup_general_camera_configuration()
+        p = PolyAbs(p0, p1)
         result = p.triangulate_point((146, 642.288), (1137.31, 385.201))
         expected_result = (0.0, 100.0, 10000.0)
         evaluate_result(result, expected_result)
 
     def test_poly_abs_rotated_left(self):
-        P0, P1 = setup_second_camera_rotated_left_configuration()
-        p = PolyAbs(P0, P1)
+        p0, p1 = setup_second_camera_rotated_left_configuration()
+        p = PolyAbs(p0, p1)
         result = p.triangulate_point((878.821, 634.619), (274.917, 511.5))
         expected_result = (500.0, 0.0, 10000.0)
         evaluate_result(result, expected_result)
 
     def test_poly_abs_rotated_right(self):
-        P0, P1 = setup_second_camera_rotated_right_configuration()
-        p = PolyAbs(P0, P1)
+        p0, p1 = setup_second_camera_rotated_right_configuration()
+        p = PolyAbs(p0, p1)
         result = p.triangulate_point((1004.08, 511.5), (150.068, 634.618))
         expected_result = (500.0, 0.0, 10000.0)
         evaluate_result(result, expected_result)
 
     def test_poly_abs_horizontal_stereo(self):
-        P0, P1 = setup_horizontal_configuration()
-        p = PolyAbs(P0, P1)
+        p0, p1 = setup_horizontal_configuration()
+        p = PolyAbs(p0, p1)
         result = p.triangulate_point((1004.08, 511.5), (274.917, 511.5))
         expected_result = (500.0, 0.0, 10000.0)
         evaluate_result(result, expected_result)
 
     def test_linear_ls_general_setup(self):
-        P0, P1 = setup_general_camera_configuration()
-        p = LinearLS(P0, P1)
+        p0, p1 = setup_general_camera_configuration()
+        p = LinearLS(p0, p1)
         result = p.triangulate_point((146, 642.288), (1137.31, 385.201))
         expected_result = (0.0, 100.0, 10000.0)
         evaluate_result(result, expected_result)
 
     def test_linear_ls_rotated_left(self):
-        P0, P1 = setup_second_camera_rotated_left_configuration()
-        p = LinearLS(P0, P1)
+        p0, p1 = setup_second_camera_rotated_left_configuration()
+        p = LinearLS(p0, p1)
         result = p.triangulate_point((878.821, 634.619), (274.917, 511.5))
         expected_result = (500.0, 0.0, 10000.0)
         evaluate_result(result, expected_result)
 
     def test_linear_ls_rotated_right(self):
-        P0, P1 = setup_second_camera_rotated_right_configuration()
-        p = LinearLS(P0, P1)
+        p0, p1 = setup_second_camera_rotated_right_configuration()
+        p = LinearLS(p0, p1)
         result = p.triangulate_point((1004.08, 511.5), (150.068, 634.618))
         expected_result = (500.0, 0.0, 10000.0)
         evaluate_result(result, expected_result)
 
     def test_linear_ls_horizontal_stereo(self):
-        P0, P1 = setup_horizontal_configuration()
-        p = LinearLS(P0, P1)
+        p0, p1 = setup_horizontal_configuration()
+        p = LinearLS(p0, p1)
         result = p.triangulate_point((1004.08, 511.5), (274.917, 511.5))
         expected_result = (500.0, 0.0, 10000.0)
         evaluate_result(result, expected_result)
 
     def test_iterative_ls_general_setup(self):
-        P0, P1 = setup_general_camera_configuration()
-        p = IterativeLS(P0, P1)
+        p0, p1 = setup_general_camera_configuration()
+        p = IterativeLS(p0, p1)
         result = p.triangulate_point((146, 642.288), (1137.31, 385.201))
         expected_result = (0.0, 100.0, 10000.0)
         evaluate_result(result, expected_result)
 
     def test_iterative_ls_rotated_left(self):
-        P0, P1 = setup_second_camera_rotated_left_configuration()
-        p = IterativeLS(P0, P1)
+        p0, p1 = setup_second_camera_rotated_left_configuration()
+        p = IterativeLS(p0, p1)
         result = p.triangulate_point((878.821, 634.619), (274.917, 511.5))
         expected_result = (500.0, 0.0, 10000.0)
         evaluate_result(result, expected_result)
 
     def test_iterative_ls_rotated_right(self):
-        P0, P1 = setup_second_camera_rotated_right_configuration()
-        p = IterativeLS(P0, P1)
+        p0, p1 = setup_second_camera_rotated_right_configuration()
+        p = IterativeLS(p0, p1)
         result = p.triangulate_point((1004.08, 511.5), (150.068, 634.618))
         expected_result = (500.0, 0.0, 10000.0)
         evaluate_result(result, expected_result)
 
     def test_iterative_ls_horizontal_stereo(self):
-        P0, P1 = setup_horizontal_configuration()
-        p = IterativeLS(P0, P1)
+        p0, p1 = setup_horizontal_configuration()
+        p = IterativeLS(p0, p1)
         result = p.triangulate_point((1004.08, 511.5), (274.917, 511.5))
         expected_result = (500.0, 0.0, 10000.0)
         evaluate_result(result, expected_result)
 
     def test_linear_eigen_general_setup(self):
-        P0, P1 = setup_general_camera_configuration()
-        p = LinearEigen(P0, P1)
+        p0, p1 = setup_general_camera_configuration()
+        p = LinearEigen(p0, p1)
         result = p.triangulate_point((146, 642.288), (1137.31, 385.201))
         expected_result = (0.0, 100.0, 10000.0)
         evaluate_result(result, expected_result)
 
     def test_linear_eigen_rotated_left(self):
-        P0, P1 = setup_second_camera_rotated_left_configuration()
-        p = LinearEigen(P0, P1)
+        p0, p1 = setup_second_camera_rotated_left_configuration()
+        p = LinearEigen(p0, p1)
         result = p.triangulate_point((878.821, 634.619), (274.917, 511.5))
         expected_result = (500.0, 0.0, 10000.0)
         evaluate_result(result, expected_result)
 
     def test_linear_eigen_rotated_right(self):
-        P0, P1 = setup_second_camera_rotated_right_configuration()
-        p = LinearEigen(P0, P1)
+        p0, p1 = setup_second_camera_rotated_right_configuration()
+        p = LinearEigen(p0, p1)
         result = p.triangulate_point((1004.08, 511.5), (150.068, 634.618))
         expected_result = (500.0, 0.0, 10000.0)
         evaluate_result(result, expected_result)
 
     def test_linear_eigen_horizontal_stereo(self):
-        P0, P1 = setup_horizontal_configuration()
-        p = LinearEigen(P0, P1)
+        p0, p1 = setup_horizontal_configuration()
+        p = LinearEigen(p0, p1)
         result = p.triangulate_point((1004.08, 511.5), (274.917, 511.5))
         expected_result = (500.0, 0.0, 10000.0)
         evaluate_result(result, expected_result)
 
     def test_iterative_eigen_general_setup(self):
-        P0, P1 = setup_general_camera_configuration()
-        p = IterativeEigen(P0, P1)
+        p0, p1 = setup_general_camera_configuration()
+        p = IterativeEigen(p0, p1)
         result = p.triangulate_point((146, 642.288), (1137.31, 385.201))
         expected_result = (0.0, 100.0, 10000.0)
         evaluate_result(result, expected_result)
 
     def test_iterative_eigen_rotated_left(self):
-        P0, P1 = setup_second_camera_rotated_left_configuration()
-        p = IterativeEigen(P0, P1)
+        p0, p1 = setup_second_camera_rotated_left_configuration()
+        p = IterativeEigen(p0, p1)
         result = p.triangulate_point((878.821, 634.619), (274.917, 511.5))
         expected_result = (500.0, 0.0, 10000.0)
         evaluate_result(result, expected_result)
 
     def test_iterative_eigen_rotated_right(self):
-        P0, P1 = setup_second_camera_rotated_right_configuration()
-        p = IterativeEigen(P0, P1)
+        p0, p1 = setup_second_camera_rotated_right_configuration()
+        p = IterativeEigen(p0, p1)
         result = p.triangulate_point((1004.08, 511.5), (150.068, 634.618))
         expected_result = (500.0, 0.0, 10000.0)
         evaluate_result(result, expected_result)
 
     def test_iterative_eigen_horizontal_stereo(self):
-        P0, P1 = setup_horizontal_configuration()
-        p = IterativeEigen(P0, P1)
+        p0, p1 = setup_horizontal_configuration()
+        p = IterativeEigen(p0, p1)
         result = p.triangulate_point((1004.08, 511.5), (274.917, 511.5))
         expected_result = (500.0, 0.0, 10000.0)
         evaluate_result(result, expected_result)
