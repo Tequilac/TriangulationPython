@@ -1,3 +1,7 @@
 opencv-python
 numpy
 pytest
+transforms3d
+matplotlib
+pygame
+pyopengl
