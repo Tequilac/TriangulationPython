@@ -1,6 +1,6 @@
 import pygame
 import transforms3d.euler as euler
-from amc_parser import *
+from .amc_parser import *
 
 from OpenGL.GL import *
 from OpenGL.GLU import *
@@ -55,7 +55,7 @@ class Viewer:
         pygame.init()
         self.screen_size = (1024, 768)
         self.screen = pygame.display.set_mode(
-            self.screen_size, pygame.DOUBLEBUF | pygame.OPENGL
+            self.screen_size, pygame.DOUBLEBUF #| pygame.OPENGL
         )
         pygame.display.set_caption(
             'AMC Parser - frame %d / %d' % (self.frame, len(self.motions))
@@ -79,7 +79,9 @@ class Viewer:
         glEnable(GL_LIGHT0)
         glEnable(GL_LIGHTING)
         glEnable(GL_DEPTH_TEST)
-        gluPerspective(45, (self.screen_size[0]/self.screen_size[1]), 0.1, 500.0)
+        import OpenGL.GLU
+        print(bool(OpenGL.GLU.gluPerspective))
+        OpenGL.GLU.gluPerspective(45, (self.screen_size[0]/self.screen_size[1]), 0.1, 500.0)
 
         glPointSize(10)
         glLineWidth(2.5)

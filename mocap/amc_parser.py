@@ -62,29 +62,41 @@ class Joint:
 
     def draw(self):
         joints = self.to_dict()
-        fig = plt.figure()
-        ax = Axes3D(fig)
+        fig = plt.figure(figsize=(20, 20), dpi=100)
+        ax = fig.add_subplot(111, projection="3d")
 
         ax.set_xlim3d(-50, 10)
         ax.set_ylim3d(-20, 40)
         ax.set_zlim3d(-20, 40)
-
         xs, ys, zs = [], [], []
+
+        minix = min([-joint.coordinate[0, 0] for joint in joints.values()])
+        maxix = max([-joint.coordinate[0, 0] for joint in joints.values()])
+        miniy = min([-joint.coordinate[1, 0] for joint in joints.values()])
+        maxiy = max([-joint.coordinate[1, 0] for joint in joints.values()])
+        miniz = min([-joint.coordinate[2, 0] for joint in joints.values()])
+        maxiz = max([-joint.coordinate[2, 0] for joint in joints.values()])
+        ax.set_xlim3d(minix - 3, maxix + 3)
+        ax.set_ylim3d(miniy - 3, maxiy + 3)
+        ax.set_zlim3d(miniz - 3, maxiz + 3)
+
         for joint in joints.values():
-            xs.append(joint.coordinate[0, 0])
-            ys.append(joint.coordinate[1, 0])
-            zs.append(joint.coordinate[2, 0])
+            xs.append(-joint.coordinate[0, 0])
+            ys.append(-joint.coordinate[1, 0])
+            zs.append(-joint.coordinate[2, 0])
+
         plt.plot(zs, xs, ys, 'b.')
 
         for joint in joints.values():
             child = joint
             if child.parent is not None:
                 parent = child.parent
-                xs = [child.coordinate[0, 0], parent.coordinate[0, 0]]
-                ys = [child.coordinate[1, 0], parent.coordinate[1, 0]]
-                zs = [child.coordinate[2, 0], parent.coordinate[2, 0]]
+                xs = [-child.coordinate[0, 0], -parent.coordinate[0, 0]]
+                ys = [-child.coordinate[1, 0], -parent.coordinate[1, 0]]
+                zs = [-child.coordinate[2, 0], -parent.coordinate[2, 0]]
                 plt.plot(zs, xs, ys, 'r')
         plt.show()
+
 
     def to_dict(self):
         ret = {self.name: self}
