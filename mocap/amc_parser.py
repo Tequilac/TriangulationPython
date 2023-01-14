@@ -70,16 +70,6 @@ class Joint:
         ax.set_zlim3d(-20, 40)
         xs, ys, zs = [], [], []
 
-        minix = min([-joint.coordinate[0, 0] for joint in joints.values()])
-        maxix = max([-joint.coordinate[0, 0] for joint in joints.values()])
-        miniy = min([-joint.coordinate[1, 0] for joint in joints.values()])
-        maxiy = max([-joint.coordinate[1, 0] for joint in joints.values()])
-        miniz = min([-joint.coordinate[2, 0] for joint in joints.values()])
-        maxiz = max([-joint.coordinate[2, 0] for joint in joints.values()])
-        ax.set_xlim3d(minix - 3, maxix + 3)
-        ax.set_ylim3d(miniy - 3, maxiy + 3)
-        ax.set_zlim3d(miniz - 3, maxiz + 3)
-
         for joint in joints.values():
             xs.append(-joint.coordinate[0, 0])
             ys.append(-joint.coordinate[1, 0])
